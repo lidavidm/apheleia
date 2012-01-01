@@ -22,11 +22,15 @@ class Game(apheleia.state.Game):
 
 class TestScene(apheleia.state.Scene):
     def setup(self):
+        self.game.eventManager.register(self)
         sprite = self.game.manager.load('/vehicles/skirmisher')
         fpsclock = self.game.manager.load('/vehicles/fpsclock')
         self.push(sprite)
         self.push(fpsclock)
-        print(self.projections)
+
+    @apheleia.event.reacts("move-up")
+    def event_move_up(self, event, state, *args):
+        pass
 
 
 if __name__ == '__main__':

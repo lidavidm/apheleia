@@ -2,7 +2,8 @@
 
 ** DONE Design for resource-game object interactions
    CLOSED: [2011-12-18 Sun 15:04]
-*** TODO Pick and implement a solution
+*** DONE Pick and implement a solution
+    CLOSED: [2012-01-01 Sun 09:55]
 **** DONE Implement Manager.path and apheleia.manager.Path
      CLOSED: [2011-12-17 Sat 14:53]
 **** DONE Test prototypeable.getKind and prototypeable.path
@@ -37,6 +38,23 @@
 ** TODO Design for code/object resources
 ** TODO Design for game state
 ** TODO Design for events/input
+
+   Each =Event= is a state machine that reacts to Pyglet events and
+   dispatches its own. For instance, the ="move-up"= command could have four
+   states: enabled, disabled, start, and stop. Each state transition could
+   have its own event, and some states (such as =enabled=) would
+   "continuously" fire, i.e. it would re-dispatch the event at a certain
+   interval.
+
+   attach(): Add handlers to each Pyglet event source and get ready to
+   dispatch events.
+
+*** TODO Implement _prototype_define on Event
+
+    This needs to get sources for the event.
+
+*** TODO Implement EventManager
+
 ** DONE Rename "name" to "kind" in prototype, JSON files
    CLOSED: [2011-12-18 Sun 15:30]
 ** DONE Instead of registering a function with Prototype in __init__, class
