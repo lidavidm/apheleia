@@ -1,0 +1,20 @@
+{
+    "type": "instance",
+    "data": {
+        "type": "projection",
+        "kind": "sprite",
+        "attributes": {
+            "components": {
+                "texture": {
+                    "path": {"__ref__": "/textures/ship"},
+                    "width": 128,
+                    "height": 128
+                },
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+    }
+}

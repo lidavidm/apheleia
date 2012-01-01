@@ -1,0 +1,11 @@
+{
+  "type": "prototype",
+  "data": {
+    "type": "entity",
+    "kind": "character",
+    "attributes": {
+      "health": 200,
+      "name": "Test Name"
+    }
+  }
+}

@@ -1,0 +1,101 @@
+apheleia
+
+Entity: * The basic component of the game world. Contains data such as
+          health, value, etc. Cannot be drawn.
+
+Projection: * Something drawn. Often subjugated to an entity, but it doesn't
+              know this.
+
+Component: * Provides data for a projection (e.g. position, sprite)
+
+Subsystem: * Provides logic for projections (camera, physics, rendering)
+           * Has different priorities, is run as part of the rendering loop
+           * Priority 0 is "first" (ui/camera), then so on
+           * Manipulates projections (but not entities)
+
+Event: * Represents some event, such as player input or an abstract game
+         event.
+       * Main driver of action
+
+Manager: * Loads and manages entities, events, etc.
+         * Key-value datastore (can map to/from nested directories)
+         * Allows items to be tagged
+         * Two data types: prototype and instance
+           * Prototype: serves as a factory for entities/projections/etc.
+           * Instance: records the state of something
+         * Avoids being used directly - instead objects keep a cache/list of
+           their prototypes (e.g. Entity keeps a cache of entity prototypes)
+           which are loaded from the manager beforehand. (Automate this?)
+           -OR- have each screen list resources that need to be loaded (ugly
+           but simple). Make this simpler by creating a dummy backend that
+           reports what resources are required.
+
+Screen: * Collection of projections, events, etc. with a certain tag
+
+How to synchronize entities/projections?
+----------------------------------------
+
+PlayerEntity.damage():
+        self.health -= ...
+        if self.projection:
+           self.projection.playAnimation('damaged')
+
+@Component.reacts('playAnimation')
+SpriteComponent.playAnimation
+
+This coupling only goes one way: the components/projection cannot change the
+entity.
+
+Storing events in a datastore
+-----------------------------
+(resource "window" "pyglet.window")
+(event "mouse_whiledown"
+       ((state "start"  source: "window" event: "on_mouse_press")
+        (state "repeat")
+        (state "stop"   source: "window" event: "on_mouse_release")))
+
+@event.reacts("mouse_whiledown", "screen1")  # name and a tag
+def mouse_whiledown(state, event_info):
+    pass
+
+OR if defined inside a screen class (handle w/ metaclasses)
+@event.reacts("mouse_whiledown")
+...
+
+Example
+-------
+;; no quotes: function/definition
+;; single-quote: symbol (basically a string, used for names)
+;; quoted: string
+
+(entity 'character fields: (
+        'name 'health 'inventory
+))  ;; first field is an implied "name" field if present; else use key
+    ;; (they should be synchronized)
+
+(prototype 'entity fields: (name: "Character")
+                   components: ('position))  ;; no name field so we use the key
+
+(component 'position fields: ('x 'y position: {'x 'y}))
+(event-source-external 'window "pyglet.window")  ;; the code provides it
+(event 'move-up states:
+       (state 'start source: etc.))  ;; - is converted to _ for Python
+
+(instance 'player of: 'character fields: (name: "Cordelia"))
+;; name is "player"
+
+class OverworldScreen(Screen):
+    @event.reacts("move-up")
+    def event_move_up(self, event, state):
+        if state == 'start':  # or event.states['start']
+            # etc.
+
+    @event.react("use")
+    def event_use(...):  # e.g. the "A" button
+        # etc.
+
+
+class Entity(metaclass=ManagerBacked):pass
+Entity._backer.manager = manager
+Entity._backer.searchPath = ['/entities', '/character/entities']
+Entity.getKind("character")  # searches /entities, /character/entities

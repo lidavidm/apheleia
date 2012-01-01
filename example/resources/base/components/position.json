@@ -1,0 +1,8 @@
+{
+  "type": "prototype",
+  "data": {
+    "type": "component",
+    "kind": "position",
+    "fields": ["x", "y"]
+  }
+}

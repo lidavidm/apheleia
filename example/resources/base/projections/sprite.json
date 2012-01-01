@@ -1,0 +1,10 @@
+{
+  "type": "prototype",
+  "data": {
+    "type": "projection",
+    "kind": "sprite",
+    "attributes": {
+      "components": ["position", "texture"]
+    }
+  }
+}

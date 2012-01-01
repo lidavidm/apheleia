@@ -1,0 +1,10 @@
+{
+    "type": "instance",
+    "data": {
+        "type": "projection",
+        "kind": "fpsclock",
+        "attributes": {
+            "components": {}
+        }
+    }
+}

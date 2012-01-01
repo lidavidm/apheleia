@@ -1,0 +1,43 @@
+* PROJ apheleia
+
+** DONE Design for resource-game object interactions
+   CLOSED: [2011-12-18 Sun 15:04]
+*** TODO Pick and implement a solution
+**** DONE Implement Manager.path and apheleia.manager.Path
+     CLOSED: [2011-12-17 Sat 14:53]
+**** DONE Test prototypeable.getKind and prototypeable.path
+     CLOSED: [2011-12-18 Sun 15:04]
+**** DONE When auto-loading resources, register them as well
+     CLOSED: [2011-12-18 Sun 15:04]
+     To do this, we need access to the custom registration hooks defined in
+     manager.Prototype. These need to be used within prototypeable.getKind.
+
+   In previous designs for Archon and Sonata, the resource manager/datastore
+   was integrated into every game object: entities, etc. all had references
+   or other ways to hook into the datastore, requiring that an instance be
+   passed around everywhere.
+
+   Furthermore, many paths had to be hard-coded; changing the structure of
+   the datastore required tedious editing of the paths.
+
+   In Apheleia, each major game class object becomes a specialized
+   datastore. For instance, =Entity= has a classmethod =getKind= that lets
+   us get any =Entity= by its prototype name
+   (e.g. =Entity.getKind('character')= would give the prototype for the
+   ~character~ entity). However, prototypes must still be explicitly
+   loaded. There are a few solutions to this issue:
+
+   - Let the class object preload certain directories beforehand.
+   - Let the class object dynamically search certain directories when a
+     resource is requested.
+   - Use a manifest/metadata file to load lists of resources beforehand.
+
+
+
+** TODO Design for code/object resources
+** TODO Design for game state
+** TODO Design for events/input
+** DONE Rename "name" to "kind" in prototype, JSON files
+   CLOSED: [2011-12-18 Sun 15:30]
+** DONE Instead of registering a function with Prototype in __init__, class
+   CLOSED: [2011-12-18 Sun 15:31]
