@@ -287,12 +287,6 @@ def instance_loader(key, data, manager):
     return Manager.Cache.DATA, Prototype.get(prototype, kind).instance(data)
 
 
-@Manager.type_loader('event')
-def event_loader(key, data, manager):
-    name = data["name"]
-    return Manager.Cache.OBJECT, Prototype.get("event", name).instance()
-
-
 @Manager.type_loader('image')
 def image_type_loader(key, data, manager):
     return Manager.Cache.OBJECT, data
