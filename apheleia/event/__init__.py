@@ -1,4 +1,5 @@
 from .event import Event, EventManager
+from . import baseevents
 
 def reacts(event):
     def _handler(func):

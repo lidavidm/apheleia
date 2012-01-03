@@ -19,6 +19,7 @@ class Game(apheleia.state.Game):
         self.eventManager = apheleia.event.EventManager()
         apheleia.common.prototypeable.defaultManager = self.manager
         self.window = pyglet.window.Window()
+        self.eventManager.provide("window", self.window)
         self.setScene(TestScene())
 
 
@@ -32,8 +33,12 @@ class TestScene(apheleia.state.Scene):
         self.push(fpsclock)
 
     @apheleia.event.reacts("move_up")
-    def event_move_up(self, event, state, *args):
+    def event_move_up(self, event, state, *args, **kwargs):
         pass
+
+    @apheleia.event.reacts("click")
+    def event_move_up(self, event, state, *args, **kwargs):
+        print("Click", state)
 
 
 if __name__ == '__main__':

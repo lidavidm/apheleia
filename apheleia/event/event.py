@@ -20,9 +20,18 @@ class Event:
     def removeHandler(self, handler):
         self._handlers.remove(handler)
 
+    def fire(self, state, *args, **kwargs):
+        for handler in self._handlers:
+            handler(self, state, *args, **kwargs)
+
     @classmethod
     def _prototype_define(cls, kind, kwargs):
-        return cls.register(kind, [], {})
+        return cls.register(
+            kind, [],
+            {
+                "source": {
+                    k: None for k in kwargs["attributes"].get("sources", [])}
+            })
 
 
 class EventManager:
@@ -40,6 +49,8 @@ class EventManager:
     def getEvent(self, kind):
         event = Event.getKind(kind)()
         self._events[kind] = event
+        for source in event.source:
+            event.source[source] = self._sources[source]
         return event
 
     def registerHandlers(self, scene):
@@ -52,4 +63,5 @@ class EventManager:
 
     def attachHandlers(self, scene):
         for event in self._events.values():
+            print(event)
             event.attach()

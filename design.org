@@ -49,11 +49,14 @@
    attach(): Add handlers to each Pyglet event source and get ready to
    dispatch events.
 
-*** TODO Implement _prototype_define on Event
+*** DONE Implement _prototype_define on Event
+    CLOSED: [2012-01-03 Tue 16:00]
 
     This needs to get sources for the event.
 
 *** TODO Implement EventManager
+
+*** TODO Have EventManager categorize events by scene (?)
 
 ** DONE Rename "name" to "kind" in prototype, JSON files
    CLOSED: [2011-12-18 Sun 15:30]

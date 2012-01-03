@@ -8,5 +8,5 @@ class Entity:
             setattr(self, field, value)
 
     @classmethod
-    def entity_register(cls, kind, kwargs):
+    def _prototype_define(cls, kind, kwargs):
         return cls.register(kind, [], kwargs['attributes'])
