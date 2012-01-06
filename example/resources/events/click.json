@@ -1,0 +1,10 @@
+{
+  "type": "prototype",
+  "data": {
+    "type": "event",
+    "kind": "click",
+    "attributes": {
+        "sources": ["window"]
+    }
+  }
+}
