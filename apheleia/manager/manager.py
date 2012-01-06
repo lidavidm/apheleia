@@ -5,6 +5,7 @@ import pyglet
 
 import apheleia.projection.component
 
+
 class Backend:
     class Promise:
         def __init__(self):
@@ -116,6 +117,7 @@ class BackendKeyError(KeyError):
 
 # Instead of tags, use "collections", which are another data type (lists of
 # references, essentially)
+
 
 class Path:
     def __init__(self, path, contents):
@@ -249,6 +251,7 @@ def jsonRefHook(manager):
             return manager.reference(dct["__ref__"], force=False)
         return dct
     return hook
+
 
 @Manager.format_loader('.json')
 def json_loader(key, promise, manager):

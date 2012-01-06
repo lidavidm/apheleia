@@ -1,5 +1,6 @@
 import types
 
+
 class prototypeable:
     defaultManager = None
 
@@ -10,12 +11,14 @@ class prototypeable:
 
     def __call__(self, cls):
         if self.cls:
-            raise RuntimeError("Prototyper can only manage one class at a time")
+            raise RuntimeError(
+                "Prototyper can only manage one class at a time")
+
         def __repr__(self):
             return "<{} {}>".format(
                 self.__class__.__name__,
                 " ".join(
-                    ":".join([field,str(getattr(self, field))])
+                    ":".join([field, str(getattr(self, field))])
                     for field in self.fields))
         cls._kinds = {}
         cls._implementations = {}

@@ -1,5 +1,6 @@
 import apheleia.common
 
+
 @apheleia.common.prototypeable()
 class Component:
     @classmethod
