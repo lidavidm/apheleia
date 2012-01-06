@@ -37,7 +37,7 @@ class TestScene(apheleia.state.Scene):
         pass
 
     @apheleia.event.reacts("click")
-    def event_move_up(self, event, state, *args, **kwargs):
+    def event_click(self, event, state, *args, **kwargs):
         print("Click", state)
 
 
