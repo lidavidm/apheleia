@@ -10,6 +10,7 @@ apheleia.entity.Entity._prototyper.paths.append('/base/entities')
 apheleia.projection.Component._prototyper.paths.append('/base/components')
 apheleia.projection.Projection._prototyper.paths.append('/base/projections')
 apheleia.event.Event._prototyper.paths.append('/events')
+apheleia.state.Subsystem._prototyper.paths.append('/base/subsystems')
 
 
 class Game(apheleia.state.Game):
@@ -19,7 +20,11 @@ class Game(apheleia.state.Game):
         self.eventManager = apheleia.event.EventManager()
         apheleia.common.prototypeable.defaultManager = self.manager
         self.window = pyglet.window.Window()
+        self.camera = apheleia.state.Subsystem.getKind('camera')()
+        self.camera.x = -20
+        self.camera.y = -20
         self.eventManager.provide("window", self.window)
+        self.addSubsystem(self.camera)
         self.setScene(TestScene())
 
 

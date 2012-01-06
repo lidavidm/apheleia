@@ -1,0 +1,8 @@
+{
+  "type": "prototype",
+  "data": {
+    "type": "component",
+    "kind": "pymunk",
+    "fields": ["mass", "shape", "shape_data"]
+  }
+}

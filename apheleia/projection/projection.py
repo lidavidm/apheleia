@@ -21,9 +21,14 @@ class Projection:
     def instance(cls, data):
         instance = cls()
         for component, attrs in data["attributes"]["components"].items():
+
+            if not hasattr(instance, component):
+                setattr(self, component, Component.getKind(component)())
+
             component = getattr(instance, component)
             for attr, value in attrs.items():
                 setattr(component, attr, value)
+
         return instance
 
     @classmethod
