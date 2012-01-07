@@ -84,7 +84,11 @@ class FPSProjection(Projection):
         self.clock = pyglet.clock.ClockDisplay()
 
     def draw(self):
+        pyglet.gl.glMatrixMode(pyglet.gl.GL_MODELVIEW)
+        pyglet.gl.glPushMatrix()
+        pyglet.gl.glLoadIdentity()
         self.clock.draw()
+        pyglet.gl.glPopMatrix()
 
 Projection.registerImplementation("sprite", SpriteProjection)
 Projection.registerImplementation("fpsclock", FPSProjection)
