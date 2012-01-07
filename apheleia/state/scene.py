@@ -29,6 +29,6 @@ class Scene:
 
     def draw(self):
         self.batch.draw()
-        # for layer in self.layers:
-        #     for projection in layer.projections:
-        #         projection.draw()
+        for projection in self.layers[-1].projections:
+            if projection.MANUAL_DRAW:
+                projection.draw()

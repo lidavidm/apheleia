@@ -6,6 +6,8 @@ from .component import Component
 
 @apheleia.common.prototypeable()
 class Projection:
+    MANUAL_DRAW = False
+
     def __init__(self):
         for component in self.components:
             self.addComponent(component, _init=False)
@@ -67,16 +69,17 @@ class SpriteProjection(Projection):
         group = self.texture.createGroup(group)
         self.vlist = batch.add(
             4, pyglet.gl.GL_QUADS, group,
-            ('v2f', [x, y, x + width, y, x + width, y + height, x, y + height]),
+            ('v2f', [x, y,
+                     x + width, y,
+                     x + width, y + height,
+                     x, y + height]),
             ('t3f', self.texture.texCoords)
         )
 
-    def draw(self):
-        pass
-        #self.texture.path.resource.blit(self.position.x, self.position.y)
-
 
 class FPSProjection(Projection):
+    MANUAL_DRAW = True
+
     def initialize(self, batch, group):
         self.clock = pyglet.clock.ClockDisplay()
 
