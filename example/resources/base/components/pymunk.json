@@ -3,6 +3,10 @@
   "data": {
     "type": "component",
     "kind": "pymunk",
-    "fields": ["mass", "shape", "shape_data"]
+    "needs": ["position"],
+    "fields": ["mass", "shape", "shape_data"],
+    "attributes": {
+        "_subsystem": {"__ref__": "/runtime/subsystems/pymunk"}
+    }
   }
 }

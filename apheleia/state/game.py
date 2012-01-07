@@ -13,6 +13,10 @@ class Game:
 
     def mainloop(self):
         self.window.on_draw = self.draw
+
+        for subsystem in self.subsystems:
+            subsystem.begin()
+
         pyglet.app.run()
 
     def draw(self):

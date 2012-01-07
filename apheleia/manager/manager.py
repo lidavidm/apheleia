@@ -149,7 +149,7 @@ class Manager:
 
     def provide(self, path, resource):
         """Provide an external asset (windows, etc.)"""
-        pass
+        self._cache[path] = resource
 
     def reference(self, path, force=False):
         """
@@ -182,10 +182,10 @@ class Manager:
             elif cache == Manager.Cache.DATA:
                 self._backend.cache(key, data)
             return obj
-        except BackendKeyError:
-            raise KeyError("Key {} not found".format(key))
         except KeyError:
             raise KeyError("Could not load key {}".format(key))
+        except BackendKeyError:
+            raise KeyError("Key {} not found".format(key))
         except ValueError:
             raise
 

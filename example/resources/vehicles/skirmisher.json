@@ -13,6 +13,13 @@
                 "position": {
                     "x": 0,
                     "y": 0
+                },
+                "pymunk": {
+                    "mass": 20,
+                    "shape": "circle",
+                    "shape_data": {
+                        "radius": 3
+                    }
                 }
             }
         }
