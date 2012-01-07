@@ -8,21 +8,30 @@ from .component import Component
 class Projection:
     def __init__(self):
         for component in self.components:
-            self.addComponent(component)
-        self.initialize()
+            self.addComponent(component, _init=False)
 
     def initialize(self):
+        """Override to initialize the projection.
+
+        This method is called when the projection is added to a scene,
+        after all components have been added.
+
+        """
         pass
 
     def draw(self):
         pass
 
-    def addComponent(self, component, **attrs):
+    def addComponent(self, component, _init=False, **attrs):
         cmpInstance = Component.getKind(component)(self, **attrs)
         setattr(self, component, cmpInstance)
         for need in cmpInstance.needs:
             if not self.hasComponent(need):
                 self.addComponent(need)
+
+        if _init:
+            cmpInstance.initialize()
+
         return cmpInstance
 
     def hasComponent(self, component):
@@ -34,11 +43,12 @@ class Projection:
 
         for component, attrs in data["attributes"]["components"].items():
             if not instance.hasComponent(component):
-                instance.addComponent(component, **attrs)
+                instance.addComponent(component, _init=True, **attrs)
             else:
                 component = getattr(instance, component)
                 for attr, val in attrs.items():
                     setattr(component, attr, val)
+                component.initialize()
 
         return instance
 
@@ -51,12 +61,23 @@ class Projection:
 
 
 class SpriteProjection(Projection):
+    def initialize(self, batch, group):
+        x, y = self.position.x, self.position.y
+        width, height = self.texture.width, self.texture.height
+        group = self.texture.createGroup(group)
+        self.vlist = batch.add(
+            4, pyglet.gl.GL_QUADS, group,
+            ('v2f', [x, y, x + width, y, x + width, y + height, x, y + height]),
+            ('t3f', self.texture.texCoords)
+        )
+
     def draw(self):
-        self.texture.path.resource.blit(self.position.x, self.position.y)
+        pass
+        #self.texture.path.resource.blit(self.position.x, self.position.y)
 
 
 class FPSProjection(Projection):
-    def initialize(self):
+    def initialize(self, batch, group):
         self.clock = pyglet.clock.ClockDisplay()
 
     def draw(self):

@@ -1,3 +1,5 @@
+import pyglet
+
 import apheleia.common
 
 
@@ -7,10 +9,14 @@ class Component:
         self.projection = projection
         for attr in attrs:
             setattr(self, attr, attrs[attr])
-        self.initialize()
 
     def initialize(self):
-        pass
+        """Override to initialize the component.
+
+        This method is called when an instance of the projection is
+        created from the datastore.
+
+        """
 
     @classmethod
     def _prototype_define(cls, kind, kwargs):
@@ -21,6 +27,18 @@ class Component:
             kwargs.get('fields', []),
             attrs
             )
+
+
+class TextureComponent(Component):
+    def initialize(self):
+        self.texture = self.path.resource.texture
+
+    def createGroup(self, parent=None):
+        return pyglet.graphics.TextureGroup(self.texture, parent=parent)
+
+    @property
+    def texCoords(self):
+        return self.texture.tex_coords
 
 
 class PymunkComponent(Component):
@@ -35,4 +53,6 @@ class PymunkComponent(Component):
         body.update_position(body, dt)
         self.position = (body.position.x, body.position.y)
 
+
 Component.registerImplementation("pymunk", PymunkComponent)
+Component.registerImplementation("texture", TextureComponent)
