@@ -10,10 +10,6 @@
                     "width": 128,
                     "height": 128
                 },
-                "position": {
-                    "x": 0,
-                    "y": 0
-                },
                 "pymunk": {
                     "mass": 20,
                     "shape": "circle",

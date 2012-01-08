@@ -43,15 +43,16 @@ class TextureComponent(Component):
 
 class PymunkComponent(Component):
     def initialize(self):
-        self.position = self.projection.position
         self._subsystem = self._subsystem.resource
         self.body, self.shape = self._subsystem.createBody(
             self.shape, self.mass, self.shape_data)
-        self.body.position = (self.position.x, self.position.y)
+        self.body.position = (self.projection.x, self.projection.y)
 
     def update_position(self, body, dt):
         body.update_position(body, dt)
-        self.position = (body.position.x, body.position.y)
+        self.projection.x, self.projection.y = (
+            body.position.x, body.position.y
+        )
 
 
 Component.registerImplementation("pymunk", PymunkComponent)

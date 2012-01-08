@@ -9,6 +9,7 @@ class Projection:
     MANUAL_DRAW = False
 
     def __init__(self):
+        self.x = self.y = 0
         for component in self.components:
             self.addComponent(component, _init=False)
 
@@ -64,7 +65,7 @@ class Projection:
 
 class SpriteProjection(Projection):
     def initialize(self, batch, group):
-        x, y = self.position.x, self.position.y
+        x, y = self.x, self.y
         width, height = self.texture.width, self.texture.height
         group = self.texture.createGroup(group)
         self.vlist = batch.add(
