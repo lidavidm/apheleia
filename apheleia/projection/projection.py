@@ -2,6 +2,8 @@ import pyglet
 
 import apheleia.common
 from .component import Component
+from .transform import TransformGroup
+from . import transform
 
 
 @apheleia.common.prototypeable()
@@ -9,7 +11,8 @@ class Projection:
     MANUAL_DRAW = False
 
     def __init__(self):
-        self.x = self.y = 0
+        self.x = self.y = self.width = self.height = 0
+        self.transform = TransformGroup(self)
         for component in self.components:
             self.addComponent(component, _init=False)
 
@@ -67,7 +70,11 @@ class SpriteProjection(Projection):
     def initialize(self, batch, group):
         x, y = self.x, self.y
         width, height = self.texture.width, self.texture.height
-        group = self.texture.createGroup(group)
+        self.width, self.height = width, height
+        group = TransformGroup(self, self.texture.createGroup(group))
+        self.transform = group
+        self.transform.add(transform.clearModelview)
+        self.rotation = self.transform.add(transform.rotate, angle=20)
         self.vlist = batch.add(
             4, pyglet.gl.GL_QUADS, group,
             ('v2f', [x, y,
